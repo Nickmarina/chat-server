@@ -6,7 +6,7 @@ export class User {
   @Prop({ required: true })
   name: string;
   @Prop({ default: "Hello) Let's connect" })
-  desription: string;
+  description: string;
   @Prop({ default: true })
   online: boolean;
   @Prop({
