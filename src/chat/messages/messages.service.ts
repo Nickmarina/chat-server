@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { async } from 'rxjs';
 import { CreateMessageDto } from '../dto/create-message.dto';
 import { Message, MessageDocument } from '../schemas/message.schema';
 
@@ -10,28 +11,21 @@ export class MessagesService {
     @InjectModel(Message.name) private messageModel: Model<MessageDocument>,
   ) {}
 
-  // async getAll(senderId: string, resipientId: string): Promise<Message[]> {
-  //   return this.messageModel.find(senderId && resipientId);
-  // }
-  async getAll(): Promise<Message[]> {
+  async getAll({ query }): Promise<Message[]> {
+    console.log(query);
     const messages = await this.messageModel.find().exec();
-    // const newList = messages.filter((message) => message);
-    // messages.map((message) => {
-    //   const userMessages = [];
-    //   const values = Object.values(message);
-    //   for (const value of values){
-    //     if (value.includes(id)){
-    //       userMessages.push(message);
-    //     }
-    //   }
-    //   return userMessages;
-    //   // if (message.sender_id === id || message.recipient_id === id) {
-    //   //   const userMessages = [];
-    //   //   userMessages.push(message);
-    //   //   return userMessages;
-    //   // }
-    // });
-    return messages;
+    const newMessages = messages.filter((message) => {
+      const values = Object.values(query);
+        for (const value of values) {
+          if (
+            JSON.stringify(message.sender_id) === JSON.stringify(value) ||
+            JSON.stringify(message.recipient_id) === JSON.stringify(value)
+          ) {
+            return message;
+          }
+        }
+    })
+    return newMessages;
   }
 
   async create(messageDto: CreateMessageDto): Promise<Message> {
