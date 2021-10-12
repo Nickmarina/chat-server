@@ -8,12 +8,6 @@ import { Message } from '../schemas/message.schema';
 export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
-  // @Get()
-  // getAll(): Promise<Message[]> {
-  //   return this.messagesService.getAll();
-  // }
-
-  
   @Get()
   getAll(@Query() query): Promise<Message[]> {
     return this.messagesService.getAll({query});

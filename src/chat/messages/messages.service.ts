@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { async } from 'rxjs';
 import { CreateMessageDto } from '../dto/create-message.dto';
 import { Message, MessageDocument } from '../schemas/message.schema';
 
@@ -12,7 +11,6 @@ export class MessagesService {
   ) {}
 
   async getAll({ query }): Promise<Message[]> {
-    console.log(query);
     const messages = await this.messageModel.find().exec();
     const newMessages = messages.filter((message) => {
       const values = Object.values(query);

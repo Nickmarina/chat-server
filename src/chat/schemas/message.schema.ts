@@ -11,6 +11,10 @@ export class Message {
   sender_id: string;
   @Prop({ type: 'ObjectId', required: true, ref: 'User' })
   recipient_id: string;
+  @Prop({ required: true })
+  sender_name: string;
+  @Prop({ required: true })
+  date: string;
 }
 
 export const MessageSchema = SchemaFactory.createForClass(Message);
