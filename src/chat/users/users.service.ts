@@ -13,9 +13,9 @@ export class UsersService {
         return this.userModel.find().exec()
     }
 
-    // async getById(id:string): Promise<User>{
-    //     return this.userModel.findById(id)
-    // }
+    async getOneById(id:string): Promise<User>{
+        return this.userModel.findById(id)
+    }
 
     async create (userDto: CreateUserDto): Promise<User>{
         const newUser = new this.userModel(userDto)
